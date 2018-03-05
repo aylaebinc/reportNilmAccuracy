@@ -1,0 +1,23 @@
+Package: reportNilmAccuracy
+Version: 0.1.0
+Title: Reports accracy of NILM results
+Description: TBD
+Authors@R: person("Daeyoung", "Kim", 
+                  email = "dykim22@encoredtech.com", 
+                  role = c("aut", "cre"))
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1.9000
+Suggests: 
+    testthat
+Imports: 
+    dplyr,
+    magrittr,
+    purrr,
+    stringr,
+    tibble,
+    readr,
+    knitr

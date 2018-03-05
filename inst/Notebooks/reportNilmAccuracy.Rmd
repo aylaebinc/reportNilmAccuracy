@@ -1,0 +1,90 @@
+---
+title: "NILM Accuracy Report"
+params:
+  applianceName: washer
+  rootPath: /home/dykim/data/tohoku/Encored_RawData_TOHOKU
+  year: 2017
+  startMonth: 4
+  endMonth: 12
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r include=FALSE}
+library(reportNilmAccuracy)
+library(tidyverse)
+
+# Target serial numbers
+homeSn <- c(
+  "F30200C8",
+  "F30200C9",
+  "F30200CA",
+  "F30200CB",
+  "F30200CC",
+  "F30200CD",
+  "F30200CE",
+  "F30200CF",
+  "F30200D0",
+  "F30200D1"
+)
+
+# Target months
+monthList <- params$startMonth:params$endMonth
+
+getMonthlyNilmAccuracy <- function(month) {
+  map_df(
+    homeSn,
+    getNilmAccuracy,
+    rootPath = params$rootPath,
+    year = params$year,
+    month = month,
+    applianceName = params$applianceName
+  )
+}
+```
+
+### Target appliance
+- `r params$applianceName`
+
+
+### Target period
+```{r echo=FALSE, results="asis"}
+cat("\n")
+cat(sprintf(
+  "- `%d-%02d ~ %d-%02d`",
+  params$year,
+  min(monthList),
+  params$year,
+  max(monthList)
+))
+cat("\n")
+```
+
+### Target home serial numbers
+- `r homeSn`
+
+
+### Accuracy tables by month
+
+
+```{r echo=FALSE, results="asis"}
+for (month in monthList) {
+  cat("\n")
+  cat(sprintf("#### [ %d-%02d ]", params$year, month))
+  acc <- getMonthlyNilmAccuracy(month)
+  accSummary <- acc %>% getNilmAccuracySummary()
+  
+  cat("\n")
+  cat("##### Accuracy summary")
+  knitr::kable(accSummary, digits = 2L) %>% 
+    print()
+  cat("\n")
+  
+  cat("##### Accuracy table")
+  knitr::kable(acc, digits = 2L) %>% 
+    print()
+  cat("\n")
+}
+```
