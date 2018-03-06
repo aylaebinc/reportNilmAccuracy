@@ -1,11 +1,11 @@
 ---
 title: "NILM Accuracy Report"
 params:
-  applianceName: washer
-  rootPath: /home/dykim/data/tohoku/Encored_RawData_TOHOKU
+  applianceName: tv
+  rootPath: ../extdata/tohoku_sample/
   year: 2017
   startMonth: 4
-  endMonth: 12
+  endMonth: 5
 output:
   html_document:
     df_print: paged
@@ -17,18 +17,24 @@ library(reportNilmAccuracy)
 library(tidyverse)
 
 # Target serial numbers
+# For test
 homeSn <- c(
-  "F30200C8",
-  "F30200C9",
-  "F30200CA",
-  "F30200CB",
-  "F30200CC",
-  "F30200CD",
-  "F30200CE",
-  "F30200CF",
-  "F30200D0",
-  "F30200D1"
+  "F30200C8"
 )
+
+# Full list
+# homeSn <- c(
+#   "F30200C8",
+#   "F30200C9",
+#   "F30200CA",
+#   "F30200CB",
+#   "F30200CC",
+#   "F30200CD",
+#   "F30200CE",
+#   "F30200CF",
+#   "F30200D0",
+#   "F30200D1"
+# )
 
 # Target months
 monthList <- params$startMonth:params$endMonth
